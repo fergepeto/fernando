@@ -67,7 +67,7 @@ footer {
 }
 
 .contato-form button {
-    background: #0d47a1;
+    background: #CB11F0;
     color: white;
     padding: 10px;
     border: none;
@@ -78,6 +78,6 @@ footer {
 }
 
 .contato-form button:hover {
-    background: #1976d2;
+    background: #E269FF;
 }
 

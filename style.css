@@ -6,7 +6,7 @@ body {
 }
 
 header {
-    background-color: #FC23E1;
+    background-color: #C723EB;
     color: white;
     padding: 20px;
 }
@@ -19,6 +19,7 @@ header nav a {
 
 main {
     padding: 20px;
+     background-color: #E051E0
 }
 
 footer {

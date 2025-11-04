@@ -21,23 +21,61 @@
         </nav>
     </header>
 
-    <!-- Conteúdo principal -->
-    <main>
-        <h1>MELHORES DICA DE FARCRY</h1>
-        <h3>DICAS DE DINHEIRO E XP RAPIDO</h3>
+   <main>
+  <h1>Bem-vindo à Locadora de Veículos</h1>
+  <p>Encontre o carro ideal para sua viagem, trabalho ou lazer.</p>
 
-        <div class="carros">
-            <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/capsule_616x353.jpg?t=1752169359"
-                alt="Carro esportivo vermelho">
+  <div id="conteudo" class="conteudo-scroll">
+    <p>Carregando conteúdo...</p>
+  </div>
+</main>
 
-            <img src="https://img.redbull.com/images/q_auto,f_auto/redbullcom/2014/11/17/1331690647242_2/the-far-cry-4-wildlife-you-really-shouldn%E2%80%99t-hunt"
-                alt="SUV preto">
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/SEU_ID_AQUI/exec&quot;; // substitua pela URL do seu Apps Script
+async function carregarConteudo() {
+  const container = document.getElementById('conteudo');
+  container.innerHTML = "<p>Carregando conteúdo...</p>";
 
-            <img src="https://www.outerspace.com.br/wp-content/uploads/2025/04/far-cry-4.webp"
-                alt="Carro branco">
-                
-        </div>
-    </main>
+  try {
+    const res = await fetch(SCRIPT_URL);
+    const dados = await res.json();
+    container.innerHTML = '';
+
+    dados.forEach(item => {
+      const bloco = document.createElement('div');
+      bloco.className = 'bloco-item';
+
+      const titulo = document.createElement('h2');
+      titulo.textContent = item.Título || '';
+      bloco.appendChild(titulo);
+
+      const descricao = document.createElement('p');
+      descricao.textContent = item.Descrição || '';
+      bloco.appendChild(descricao);
+
+      if (item.Url && item.Url.startsWith('http')) {
+        if (item.Url.match(/\.(jpg|jpeg|png|gif|webp)$/i) || item.Url.includes('unsplash')) {
+          const img = document.createElement('img');
+          img.src = item.Url;
+          img.alt = item.Título || 'Imagem';
+          bloco.appendChild(img);
+        } else {
+          const link = document.createElement('a');
+          link.href = item.Url;
+          link.textContent = 'Ver mais';
+          bloco.appendChild(link);
+        }
+      }
+
+      container.appendChild(bloco);
+    });
+  } catch (err) {
+    container.innerHTML = "<p>Erro ao carregar dados: " + err.message + "</p>";
+  }
+}
+
+carregarConteudo();
+</script>
 
     <!-- Rodapé -->
     <footer>

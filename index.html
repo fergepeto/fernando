@@ -21,7 +21,7 @@
         </nav>
     </header>
 
-   <main>
+<main>
   <h1>Bem-vindo à Locadora de Veículos</h1>
   <p>Encontre o carro ideal para sua viagem, trabalho ou lazer.</p>
 
@@ -31,7 +31,7 @@
 </main>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyLvPvee_eY5gV95tcyxD6ElvM3EhAXN3Abe3fQfCh9fDBlD2Mxo--E8gQZCtzkGrcZ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDIs66o8H8q8Tj7kthvWp5gM7Y8JXcSzOT2l4P6kpLymvR0dK8xI69U1nykspVRhOH/exec" // substitua pela URL do seu Apps Script
 async function carregarConteudo() {
   const container = document.getElementById('conteudo');
   container.innerHTML = "<p>Carregando conteúdo...</p>";
@@ -46,18 +46,18 @@ async function carregarConteudo() {
       bloco.className = 'bloco-item';
 
       const titulo = document.createElement('h2');
-      titulo.textContent = item.Titulo || '';
+      titulo.textContent = item.Título || '';
       bloco.appendChild(titulo);
 
       const descricao = document.createElement('p');
-      descricao.textContent = item.Descricao || '';
+      descricao.textContent = item.Descrição || '';
       bloco.appendChild(descricao);
 
       if (item.Url && item.Url.startsWith('http')) {
         if (item.Url.match(/\.(jpg|jpeg|png|gif|webp)$/i) || item.Url.includes('unsplash')) {
           const img = document.createElement('img');
           img.src = item.Url;
-          img.alt = item.Titulo || 'Imagem';
+          img.alt = item.Título || 'Imagem';
           bloco.appendChild(img);
         } else {
           const link = document.createElement('a');

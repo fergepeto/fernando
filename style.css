@@ -1,120 +1,116 @@
-/* Estilo geral */
+/* ===== Estilo geral ===== */
 body {
-    margin: 0;
-    background: #0d0d0d;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
+  margin: 0;
+  background: #111;
+  font-family: Arial, sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
 }
 
 .game {
-    width: 360px;
-    height: 640px;
-    background: #1a1a1a;
-    display: flex;
-    flex-direction: column;
-    border: 3px solid #333;
+  width: 800px;
+  height: 500px;
+  background: #222;
+  border: 3px solid #333;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Cabeçalho */
+/* ===== Cabeçalho ===== */
 .header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #222;
-    border-bottom: 2px solid #444;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #111;
+  border-bottom: 2px solid #444;
 }
 
 .header span {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-/* Área de batalha */
-.battlefield {
-    flex: 1;
-    position: relative;
-    background: #2a2a2a;
-    margin: 5px;
-    overflow: hidden;
+/* ===== Caminho dos inimigos ===== */
+.path {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: #444;
 }
 
-/* Cristal */
-.crystal {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    width: 40px;
-    height: 40px;
-    background: url('https://cdn-icons-png.flaticon.com/512/210/210946.png') no-repeat center center;
-    background-size: contain;
-    transform: translateY(-50%);
+/* ===== Base ===== */
+.base {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 40px;
+  height: 200px;
+  background: #0f0;
+  text-align: center;
+  line-height: 200px;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
-/* Heróis */
-.heroes {
-    position: absolute;
-    left: 60px;
-    top: 0;
-    bottom: 0;
-    width: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+/* ===== Torres ===== */
+.tower {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: #00f;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.hero {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 5px;
-    background: url('https://cdn-icons-png.flaticon.com/512/199/199602.png') no-repeat center center;
-    background-size: contain;
+/* ===== Inimigos ===== */
+.enemy {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: red;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
 }
 
-/* Monstros */
-.monsters {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 50px;
+/* ===== Projetéis ===== */
+.bullet {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: yellow;
+  border-radius: 50%;
 }
 
-.monster {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 5px;
-    background: url('https://cdn-icons-png.flaticon.com/512/616/616408.png') no-repeat center center;
-    background-size: contain;
-}
-
-/* Painel de ações */
+/* ===== Botões ===== */
 .controls {
-    background: #111;
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: #111;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .controls button {
-    padding: 8px 10px;
-    border-radius: 5px;
-    border: none;
-    background: #222;
-    color: white;
-    cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background: #222;
+  color: white;
+  cursor: pointer;
 }
 
 .controls button:hover {
-    background: #333;
+  background: #333;
 }
-
-/* Log */
-.log {
-    background: #111;
-    height: 100px;
-    overflow-y: auto;
-    padding: 5px;
-    font-size: 14px;
-}
-

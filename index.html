@@ -2,49 +2,265 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Defensores do Cristal</title>
-<link rel="stylesheet" href="style.css">
+<title>Tower Defense Simples</title>
+<style>
+body {
+  margin:0;
+  background:#111;
+  font-family:Arial;
+  color:white;
+  display:flex;
+  justify-content:center;
+}
+.game {
+  width:800px;
+  height:500px;
+  background:#222;
+  border:3px solid #333;
+  position:relative;
+  overflow:hidden;
+}
+/* Cabeçalho */
+.header {
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:40px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  background:#111;
+  border-bottom:2px solid #444;
+}
+.header span {font-weight:bold;}
+
+/* Caminho dos inimigos */
+.path {
+  position:absolute;
+  top:50px;
+  left:0;
+  width:100%;
+  height:200px;
+  background:#444;
+}
+
+/* Base */
+.base {
+  position:absolute;
+  right:0;
+  top:50px;
+  width:40px;
+  height:200px;
+  background:#0f0;
+  text-align:center;
+  line-height:200px;
+  font-weight:bold;
+}
+
+/* Torres */
+.tower {
+  position:absolute;
+  width:40px;
+  height:40px;
+  background:#00f;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+/* Inimigos */
+.enemy {
+  position:absolute;
+  width:30px;
+  height:30px;
+  background:red;
+  border-radius:50%;
+  top:0;
+  left:0;
+}
+
+/* Projetil */
+.bullet {
+  position:absolute;
+  width:10px;
+  height:10px;
+  background:yellow;
+  border-radius:50%;
+}
+
+/* Botões */
+.controls {
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:50px;
+  background:#111;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+.controls button {
+  padding:5px 10px;
+  border:none;
+  border-radius:5px;
+  background:#222;
+  color:white;
+  cursor:pointer;
+}
+.controls button:hover {background:#333;}
+</style>
 </head>
 <body>
 
 <div class="game">
-
-    <!-- Cabeçalho -->
-    <div class="header">
-        <div class="gold">💰 Ouro: <span id="gold">0</span></div>
-        <div class="crystal-hp">💎 Cristal HP: <span id="crystalHP">100</span></div>
-    </div>
-
-    <!-- Área de batalha -->
-    <div class="battlefield" id="battlefield">
-
-        <!-- Heróis -->
-        <div class="heroes" id="heroes">
-            <!-- Heróis vão aparecer aqui -->
-        </div>
-
-        <!-- Monstros -->
-        <div class="monsters" id="monsters">
-            <!-- Monstros vão aparecer aqui -->
-        </div>
-
-        <!-- Cristal -->
-        <div class="crystal" id="crystal"></div>
-
-    </div>
-
-    <!-- Painel de Ações -->
-    <div class="controls">
-        <button onclick="addHero()">Adicionar Herói (50 Ouro)</button>
-        <button onclick="startWave()">Iniciar Onda</button>
-    </div>
-
-    <!-- Log do jogo -->
-    <div class="log" id="log"></div>
-
+  <div class="header">
+    <span>Ouro: <span id="gold">100</span></span>
+    <span>Base HP: <span id="baseHP">100</span></span>
+  </div>
+  <div class="path"></div>
+  <div class="base" id="base">🏰</div>
+  <div class="controls">
+    <button onclick="placeTower()">Colocar Torre (50 ouro)</button>
+    <button onclick="startWave()">Iniciar Onda</button>
+  </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+// ======== Variáveis ========
+const game = document.querySelector('.game');
+const goldEl = document.getElementById('gold');
+const baseHPEl = document.getElementById('baseHP');
+let gold = 100;
+let baseHP = 100;
+let towers = [];
+let enemies = [];
+let bullets = [];
+let waveInterval;
+
+// ======== Funções ========
+
+function log(text){
+  console.log(text);
+}
+
+// Colocar torre
+function placeTower(){
+  if(gold<50) return alert('Ouro insuficiente');
+  gold -=50;
+  goldEl.innerText = gold;
+
+  const tower = document.createElement('div');
+  tower.classList.add('tower');
+  // posição aleatória no caminho
+  const top = 60 + Math.random()*140;
+  tower.style.top = top + 'px';
+  tower.style.left = 100 + Math.random()*500 + 'px';
+  game.appendChild(tower);
+  towers.push({el:tower, top:top, left:parseInt(tower.style.left), cooldown:0});
+}
+
+// Criar inimigo
+function spawnEnemy(){
+  const enemyEl = document.createElement('div');
+  enemyEl.classList.add('enemy');
+  enemyEl.style.top = 50 + Math.random()*170 + 'px';
+  enemyEl.style.left = '0px';
+  game.appendChild(enemyEl);
+  enemies.push({el:enemyEl, hp:30, speed:1});
+}
+
+// Iniciar onda
+function startWave(){
+  if(waveInterval) clearInterval(waveInterval);
+  let count = 0;
+  waveInterval = setInterval(()=>{
+    if(count<10){
+      spawnEnemy();
+      count++;
+    } else {
+      clearInterval(waveInterval);
+    }
+  },800);
+}
+
+// Atualizar jogo
+function gameLoop(){
+  // Inimigos avançam
+  enemies.forEach((e,i)=>{
+    let left = parseFloat(e.el.style.left);
+    left += e.speed;
+    e.el.style.left = left + 'px';
+
+    // Chegou na base
+    if(left>=760){
+      baseHP -=10;
+      baseHPEl.innerText = baseHP;
+      game.removeChild(e.el);
+      enemies.splice(i,1);
+      if(baseHP<=0){
+        alert('🏰 Base destruída! Fim de jogo.');
+        location.reload();
+      }
+    }
+  });
+
+  // Torres atacam
+  towers.forEach(t=>{
+    t.cooldown +=0.1;
+    if(t.cooldown>=1){
+      // Encontrar inimigo próximo
+      const target = enemies.find(e=>{
+        const ex = parseFloat(e.el.style.left);
+        const ey = parseFloat(e.el.style.top);
+        const tx = t.left;
+        const ty = t.top;
+        return Math.hypot(ex-tx, ey-ty)<100;
+      });
+      if(target){
+        t.cooldown=0;
+        // Criar projétil
+        const bulletEl = document.createElement('div');
+        bulletEl.classList.add('bullet');
+        bulletEl.style.left = t.left + 'px';
+        bulletEl.style.top = t.top + 'px';
+        game.appendChild(bulletEl);
+        bullets.push({el:bulletEl, target:target, damage:10});
+      }
+    }
+  });
+
+  // Atualizar projéteis
+  bullets.forEach((b,i)=>{
+    const tx = parseFloat(b.target.el.style.left);
+    const ty = parseFloat(b.target.el.style.top);
+    let bx = parseFloat(b.el.style.left);
+    let by = parseFloat(b.el.style.top);
+    const angle = Math.atan2(ty-by, tx-bx);
+    bx += Math.cos(angle)*5;
+    by += Math.sin(angle)*5;
+    b.el.style.left = bx+'px';
+    b.el.style.top = by+'px';
+    // Acertou
+    if(Math.hypot(tx-bx, ty-by)<5){
+      b.target.hp -= b.damage;
+      game.removeChild(b.el);
+      bullets.splice(i,1);
+      if(b.target.hp<=0){
+        game.removeChild(b.target.el);
+        enemies.splice(enemies.indexOf(b.target),1);
+        gold +=10;
+        goldEl.innerText = gold;
+      }
+    }
+  });
+
+  requestAnimationFrame(gameLoop);
+}
+
+// Iniciar loop
+gameLoop();
+</script>
+
 </body>
 </html>
-

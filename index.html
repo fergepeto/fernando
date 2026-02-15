@@ -1,62 +1,50 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DICAS FARCRY 4</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Defensores do Cristal</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+<div class="game">
+
     <!-- Cabeçalho -->
-    <header>
-        <h2>Ajuda para Iniciantes</h2>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="filiais.html">XP / Dineiro rapido</a>
-            <a href="contato.html">Para mais dicas</a>
-             <a href="planilha.html">Planilhas</a>
-        </nav>
-        <div id="tema-toggle" class="tema-toggle">
-  <div class="bolinha"></div>
+    <div class="header">
+        <div class="gold">💰 Ouro: <span id="gold">0</span></div>
+        <div class="crystal-hp">💎 Cristal HP: <span id="crystalHP">100</span></div>
+    </div>
+
+    <!-- Área de batalha -->
+    <div class="battlefield" id="battlefield">
+
+        <!-- Heróis -->
+        <div class="heroes" id="heroes">
+            <!-- Heróis vão aparecer aqui -->
+        </div>
+
+        <!-- Monstros -->
+        <div class="monsters" id="monsters">
+            <!-- Monstros vão aparecer aqui -->
+        </div>
+
+        <!-- Cristal -->
+        <div class="crystal" id="crystal"></div>
+
+    </div>
+
+    <!-- Painel de Ações -->
+    <div class="controls">
+        <button onclick="addHero()">Adicionar Herói (50 Ouro)</button>
+        <button onclick="startWave()">Iniciar Onda</button>
+    </div>
+
+    <!-- Log do jogo -->
+    <div class="log" id="log"></div>
+
 </div>
-    </header>
 
-<main>
-  <h1>Dicas de FarCry4</h1>
-  <p>Melhores dicas pra iniciantes no FarCry4.</p>   
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bBqMkYpIup8?si=ET2fpQ4Uwc-F4L_p" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    
-    <h2>FARCRY 4</h2>
-<img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/298110/capsule_616x353.jpg?t=1752169359"
-                alt="Carro esportivo vermelho">
-    <h2>Diversos animais para se divertir </h2>
-    <img src="https://img.redbull.com/images/q_auto,f_auto/redbullcom/2014/11/17/1331690647242_2/the-far-cry-4-wildlife-you-really-shouldn%E2%80%99t-hunt" width="600" height="500">
-    <h2>Elefantes amigaveis e otimos para lutar</h2>
-<img src="https://www.outerspace.com.br/wp-content/uploads/2025/04/far-cry-4.webp"
-                alt="Carro esportivo vermelho">
-
-    <!-- Rodapé -->
-    <footer>
-        <p>&copy; 2025 FERNANDO - Todos os direitos reservados</p>
-    </footer>
-<script>
-  const toggle = document.getElementById("tema-toggle");
-  const body = document.body;
-
-  // Carregar tema salvo
-  let tema = localStorage.getItem("tema") || "tema-claro";
-  if (tema === "tema-escuro") body.classList.add("tema-escuro");
-
-  toggle.addEventListener("click", () => {
-    body.classList.toggle("tema-escuro");
-
-    const ativo = body.classList.contains("tema-escuro");
-    localStorage.setItem("tema", ativo ? "tema-escuro" : "tema-claro");
-  });
-</script>
+<script src="script.js"></script>
 </body>
-
 </html>
+
